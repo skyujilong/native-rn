@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 
+import './src/app';
+
 export default class testrn extends Component {
   render() {
     return (
