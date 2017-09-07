@@ -46,6 +46,8 @@ const initialNavState = AppNavigator.router.getStateForAction(
 );
 
 function nav(state = initialNavState, action){
+    console.log('nav...................');
+    console.log(action.type);
     let nextState;
     //TODO switch case
     switch(action.type){
@@ -53,7 +55,7 @@ function nav(state = initialNavState, action){
             nextState = AppNavigator.router.getStateForAction(NavigationActions.back(),state);
             break;
         case 'cmnt':
-            nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName:'article'}))
+            nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName:'cmnt'}))
             break;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
