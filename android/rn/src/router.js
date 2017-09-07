@@ -29,7 +29,7 @@ class AppWithNavigationState extends React.Component {
         return (
             <AppNavigator navigation={addNavigationHelpers({
                 dispatch: this.props.dispatch,
-                state: this.props.nav,
+                state: this.props.nav
               })} />
         );
     }
@@ -55,7 +55,8 @@ function nav(state = initialNavState, action){
             nextState = AppNavigator.router.getStateForAction(NavigationActions.back(),state);
             break;
         case 'cmnt':
-            nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName:'cmnt'}))
+            //如果 两个screen之前的切换没有发生动画，说明是没有更改navigation的index的值，https://github.com/react-community/react-navigation/issues/351
+            nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName:'cmnt'}),state)
             break;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
