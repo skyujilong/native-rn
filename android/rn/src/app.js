@@ -1,11 +1,24 @@
 /**
  * 入口文件
  */
-
+import React from 'react';
 import ReduxThunk from 'redux-thunk';
 import {createStore,applyMiddleware} from 'redux';
+import Router from './router';
 import reducerM from './reducerM';
-//TODO 引入reducer 之后 根据reducer初始化store
-console.log(reducerM);
-let store = createStore(reducerM,applyMiddleware(ReduxThunk));
-console.log(store);
+import {Provider} from 'react-redux';
+import {View,Text} from 'react-native';
+
+let store = createStore(reducerM(),applyMiddleware(ReduxThunk));
+
+console.log(store.getState());
+
+export default class App extends React.Component {
+    render(){
+        return (
+            <Provider store={store}>
+                <Router/>
+            </Provider>
+        );
+    }
+}
