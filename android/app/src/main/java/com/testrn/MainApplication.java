@@ -23,7 +23,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-              new RegisterArticleHelper()
+              new RegisterArticleHelper()//将注册的ArticleHelper注册入这个app下，这样通过rn中的reactnativemodule这个类就能拿到，android提供的方法或者ui了
       );
     }
   };

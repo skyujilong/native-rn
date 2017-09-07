@@ -17,6 +17,10 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+/**
+ * 该类别是注册给rn nativeModule的句柄，方便rn的调用的
+ * https://reactnative.cn/docs/0.48/native-modules-android.html#content
+ */
 
 public class ArticleHelper extends ReactContextBaseJavaModule{
     public ArticleHelper(ReactApplicationContext reactContext){
@@ -28,6 +32,10 @@ public class ArticleHelper extends ReactContextBaseJavaModule{
         return "ArticleHelper";
     }
 
+    /**
+     * 常量相关
+     * 注册的其他方法 也同样可以被rn访问到 估计是转化到rn中的reactnativeModule上的articlehelper的proto上
+     */
     @Override
     public Map<String, Object> getConstants() {
         final Map<String,Object> constants = new HashMap<>();

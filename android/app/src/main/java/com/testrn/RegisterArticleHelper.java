@@ -20,6 +20,11 @@ public class RegisterArticleHelper implements ReactPackage {
         return Collections.emptyList();
     }
 
+    /**
+     * 将ArticleHelper注册进入reactPackage
+     * @param reactContext
+     * @return
+     */
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
