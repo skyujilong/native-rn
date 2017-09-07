@@ -5,7 +5,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button, Alert, NativeModules} from 'react-native';
 import {connect} from 'react-redux';
-console.log(NativeModules.ArticleHelper);
+// console.log(NativeModules.ArticleHelper);
 const styles = StyleSheet.create({
     'container': {
         flex: 1,

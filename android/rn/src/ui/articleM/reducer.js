@@ -1,7 +1,2 @@
 'use strict';
-
-
-
-export default function test(){
-    
-}
+//获取article相关内容
