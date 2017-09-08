@@ -5,7 +5,7 @@ let reducers = [];
 
 export function initRootReducer(reducer){
     // console.log('push.............');
-    reducers.push(reducer)
+    reducers.push(reducer);
 }
 
 // export default combineReducers((() => {

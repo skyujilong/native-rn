@@ -46,8 +46,6 @@ const initialNavState = AppNavigator.router.getStateForAction(
 );
 
 function nav(state = initialNavState, action){
-    console.log('nav...................');
-    console.log(action.type);
     let nextState;
     //TODO switch case
     switch(action.type){

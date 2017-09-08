@@ -5,6 +5,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button, Alert, NativeModules} from 'react-native';
 import {connect} from 'react-redux';
+import ArticleM from '../ui/articleM/index';
 // console.log(NativeModules.ArticleHelper);
 const styles = StyleSheet.create({
     'container': {
@@ -23,7 +24,8 @@ class Article extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>hello world!!!22233</Text>
+                {/* <Text>hello world!!!22233</Text> */}
+                <ArticleM/>
             </View>
         );
     }
