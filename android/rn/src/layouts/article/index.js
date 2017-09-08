@@ -3,17 +3,22 @@
  * layout布局模块，仅仅提供，该页面上的布局元素
  */
 import React from 'react';
-import {View, Text, StyleSheet, Button, Alert, NativeModules} from 'react-native';
+import {View, Text, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import ArticleM from '../../ui/articleM/index';
-// console.log(NativeModules.ArticleHelper);
+//自己相关的reducer
+import {reqArticle} from './action';
+import './reducer';
+
+import Header from '../../ui/head';
+
+
 const styles = StyleSheet.create({
     'container': {
         flex: 1,
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        flexDirection: 'column',
+        backgroundColor:'#fff'
     }
 })
 
@@ -21,20 +26,45 @@ class Article extends React.Component {
     static navigationOptions = {
         title: 'welcome!!!'
     }
+
+    componentWillMount(){
+        const {getArticle} = this.props;
+        getArticle();
+    }
+
     render() {
+        const {article} = this.props;
+        console.log(article);
         return (
             <View style={styles.container}>
-                {/* 头部导航 */}
-                {/* 文章内容 */}
-                {/* 入选主题 */}
-                {/* 禁止评论 与 禁止转载 */}
-                {/* 评论区 */}
-                {/* 最底部的评论浮层 */}
-                {/* <Text>hello world!!!22233</Text> */}
+                {/* 添加loading动画效果 */}
+                <ScrollView>
+                    {/* 头部导航 */}
+                    <Header/>
+                    {/* 文章内容 */}
+                    {/* 入选主题 */}
+                    {/* 禁止评论 与 禁止转载 */}
+                    {/* 评论区 */}
+                    {/* 最底部的评论浮层 */}
+                    {/* <Text>hello world!!!22233</Text> */}
+                </ScrollView>
                 <ArticleM/>
             </View>
         );
     }
 }
 
-export default connect()(Article);
+function mapStateToProps(state){
+    return {
+        article:state.article
+    }
+}
+function mapDispatchToProps(dispatch){
+    return {
+        getArticle: () => {
+            dispatch(reqArticle());
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Article);
