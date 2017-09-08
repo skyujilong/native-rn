@@ -11,7 +11,7 @@ import {reqArticle} from './action';
 import './reducer';
 
 import Header from '../../ui/head';
-
+import Article from '../../ui/article';
 
 const styles = StyleSheet.create({
     'container': {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     }
 })
 
-class Article extends React.Component {
+class ArticleLayout extends React.Component {
     static navigationOptions = {
         title: 'welcome!!!'
     }
@@ -42,6 +42,7 @@ class Article extends React.Component {
                     {/* 头部导航 */}
                     <Header/>
                     {/* 文章内容 */}
+                    <Article/>
                     {/* 入选主题 */}
                     {/* 禁止评论 与 禁止转载 */}
                     {/* 评论区 */}
@@ -67,4 +68,4 @@ function mapDispatchToProps(dispatch){
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Article);
+export default connect(mapStateToProps,mapDispatchToProps)(ArticleLayout);
