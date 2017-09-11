@@ -7,6 +7,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.psykar.cookiemanager.CookieManagerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-              new RegisterArticleHelper()//将注册的ArticleHelper注册入这个app下，这样通过rn中的reactnativemodule这个类就能拿到，android提供的方法或者ui了
+              new RegisterArticleHelper(),//将注册的ArticleHelper注册入这个app下，这样通过rn中的reactnativemodule这个类就能拿到，android提供的方法或者ui了
+              new CookieManagerPackage()
       );
     }
   };

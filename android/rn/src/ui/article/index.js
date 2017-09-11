@@ -5,6 +5,18 @@ import React from 'react';
 import {View,WebView,Text} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './css/style';
+//测试cookie
+import CookieManager from 'react-native-cookies';
+console.log(CookieManager);
+CookieManager.setFromResponse(
+  'http://example.com',
+  'user_session=abcdefg; path=/; expires=Thu, 1 Jan 2030 00:00:00 -0000; secure; HttpOnly')
+    .then((res) => {
+        console.log(res);
+      // `res` will be true or false depending on success.
+      console.log('CookieManager.setFromResponse =>', res);
+    });
+
 // let html = require('./test.html');
 //
 
@@ -42,7 +54,7 @@ class Article extends React.Component {
                     }}
                     source={{html:html}}
 
-                    injectedJavaScript={'alert("haha");'}
+                    // injectedJavaScript={'alert("haha");'}
                     ></WebView>
             </View>
         );
