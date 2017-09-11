@@ -5,13 +5,13 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
-import ArticleM from '../../ui/articleM/index';
 //自己相关的reducer
 import {reqArticle} from './action';
 import './reducer';
 
 import Header from '../../ui/head';
 import Article from '../../ui/article';
+import Foot from '../../ui/foot';
 
 import { NativeModules } from 'react-native';
 const {ArticleHelper} = NativeModules;
@@ -58,7 +58,8 @@ class ArticleLayout extends React.Component {
                     {/* 最底部的评论浮层 */}
                     {/* <Text>hello world!!!22233</Text> */}
                 </ScrollView>
-                <ArticleM/>
+                {/* 底部页脚位置 */}
+                <Foot/>
             </View>
         );
     }
