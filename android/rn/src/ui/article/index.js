@@ -5,8 +5,9 @@ import React from 'react';
 import {View,WebView,Text} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './css/style';
-
-// let html =`<html><body>hello world</body></html>`;
+import ActionType from '../../actionType';
+import {changeWebHeight} from './action';
+import './reducer';
 
 class Article extends React.Component {
     constructor(){
@@ -14,7 +15,7 @@ class Article extends React.Component {
         this.message = this.message.bind(this);
     }
     render(){
-        const {article} = this.props;
+        const {article,wbHeight} = this.props;
         const html = this.getRenderContent(article);
         console.log(html);
         return (
@@ -25,7 +26,7 @@ class Article extends React.Component {
 
                     style={{
                         flex:1,
-                        height:500
+                        height:wbHeight
                     }}
 
                     javaScriptEnabled={true}
@@ -33,15 +34,10 @@ class Article extends React.Component {
                     scrollEnabled={false}
 
                     source={{html:html}}
-                    onMessage={(e) => {
-                        console.log('message event.....');
-                    }}
+                    onMessage={this.message}
                     onError={(e) => {
                         console.log(e);
                     }}
-                    // onNavigationStateChange={() => {
-                    //     console.log(arguments);
-                    // }}
 
                     ></WebView>}
 
@@ -49,8 +45,13 @@ class Article extends React.Component {
         );
     }
     message(e){
-        console.log(e);
-        console.log('message..............');
+        const {reSizeWebView} = this.props;
+        let data = JSON.parse(e.nativeEvent.data);
+        switch(data.type){
+            case 'onload':
+                reSizeWebView(data.data.height);
+                break;
+        }
     }
     getRenderContent(content){
         const {article_body} = content;
@@ -66,13 +67,19 @@ class Article extends React.Component {
                     }
                 </style>
             </head>
-            <body>
-                <div id="test"></div>
-                ${article_body}
+            <body style="overflow:hidden;">
+                <div style="height:100%;overflow:hidden;">
+                    <div id="container">
+                        ${article_body}
+                    </div>
+                </div>
                 <script>
                     window.onload = function(){
                         setTimeout(function(){
-                            postMessage('helloworld','*');
+                            /* 第一个参数必须是string类型的 */
+                            var height = getComputedStyle(document.getElementById('container')).height;
+                            height = height.replace('px','') - 0;
+                            postMessage(JSON.stringify({type:'onload',data:{height:height}}),'*');
                         },100)
                     }
                 </script>
@@ -86,8 +93,17 @@ class Article extends React.Component {
 
 function mapStateToProps(state){
     return {
-        article:state.article
+        article:state.article,
+        wbHeight:state.articleWebViewHeight
     }
 }
 
-export default connect(mapStateToProps)(Article);
+function mapDispatchToProps(dispatch){
+    return {
+        reSizeWebView: (height) => {
+            dispatch(changeWebHeight(height));
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Article);
