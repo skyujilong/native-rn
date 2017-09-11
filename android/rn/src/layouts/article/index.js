@@ -41,8 +41,7 @@ class ArticleLayout extends React.Component {
     }
 
     render() {
-        const {article} = this.props;
-        console.log(article);
+        // const {article} = this.props;
         return (
             <View style={styles.container}>
                 {/* 添加loading动画效果 */}
