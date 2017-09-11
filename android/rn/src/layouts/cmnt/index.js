@@ -1,8 +1,8 @@
 'use strict';
 //layout布局
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-
+import {View, Text, StyleSheet,Button,Alert} from 'react-native';
+import {connect} from 'react-redux';
 const styles = StyleSheet.create({
     'container': {
         flex: 1,
@@ -13,15 +13,29 @@ const styles = StyleSheet.create({
     }
 })
 
-export default class Cmnt extends React.Component {
+class Cmnt extends React.Component {
     static navigationOptions = {
         title: 'welcome cmnt'
     }
     render() {
         return (
             <View style={styles.container}>
-                <Text>hello cmnt!!!</Text>
+                <Button title="postCmnt" onPress={() => {
+
+                }}/>
             </View>
         );
     }
+    sendCmnt(){
+
+    }
 }
+function mapDispatchToProps(){
+
+}
+
+function mapStateToProps(){
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Cmnt);

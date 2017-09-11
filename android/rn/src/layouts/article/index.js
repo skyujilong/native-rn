@@ -13,6 +13,14 @@ import './reducer';
 import Header from '../../ui/head';
 import Article from '../../ui/article';
 
+import { NativeModules } from 'react-native';
+const {ArticleHelper} = NativeModules;
+//注册了一个helper的方法，用于提供接口访问相关
+ArticleHelper.ajax(JSON.stringify({url:'helloworld','method':'post'})).then(function(data){
+    console.log(data);
+});
+
+
 const styles = StyleSheet.create({
     'container': {
         flex: 1,

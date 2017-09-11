@@ -3,7 +3,7 @@
 import ActionType, {register} from '../../actionType';
 import { NativeModules } from 'react-native';
 const {ArticleHelper} = NativeModules;
-
+console.log(ArticleHelper);
 
 register(['GET_ARTICLE_INFO', 'GET_ARTICLE_INFO_SUCCESS', 'GET_ARTICLE_INFO_FAIL']);
 
