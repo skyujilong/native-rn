@@ -47,6 +47,8 @@ public class ArticleHelper extends ReactContextBaseJavaModule{
         constants.put("article_id","1342ac9e20102x2fn");
         constants.put("blog_uid","5170186722");
         constants.put("sign","ddbcc9e22f03882fb2bee91a94e3b28c336a1dbf7d10ffd086dd82b1ecce9b3b");
+        constants.put("SUBP","0033WrSXqPxfM725Ws9jqgMF55529P9D9WFNRjXsIH-MYLaUi_9fDxX-5NHD95QpSK.fehnESoBEWs4Dqcj_i--RiK.7i-i2i--fi-8siKL8i--NiKLWiKnXi--NiK.ci-zEi--ciKn0i-8F");
+        constants.put("SUB","_2A250sYmaDeRhGedL4lcR-CzKzz6IHXVXxvxSrDV_PUNbm9ANLU7hkW9KHH19dT7nLyZut2HLvmIv61FSww..");
         return constants;
     }
 }

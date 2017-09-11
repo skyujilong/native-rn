@@ -8,15 +8,18 @@ import styles from './css/style';
 //测试cookie
 import CookieManager from 'react-native-cookies';
 console.log(CookieManager);
+const expires = new Date('2018-9-11');
 CookieManager.setFromResponse(
-  'http://example.com',
-  'user_session=abcdefg; path=/; expires=Thu, 1 Jan 2030 00:00:00 -0000; secure; HttpOnly')
+  'http://comment5.news.sina.com.cn',
+  'user_session=abcdefg; path=/; expires=' + expires)
     .then((res) => {
-        console.log(res);
       // `res` will be true or false depending on success.
       console.log('CookieManager.setFromResponse =>', res);
     });
-
+CookieManager.get('http://comment5.news.sina.com.cn').then((res) => {
+    //获取 cookie
+    console.log('CookieManager.get =>', res);
+})
 // let html = require('./test.html');
 //
 
