@@ -12,6 +12,7 @@ import './reducer';
 import Header from '../../ui/head';
 import Article from '../../ui/article';
 import Foot from '../../ui/foot';
+import CmntEditor from '../../ui/cmntEditor';
 
 import { NativeModules } from 'react-native';
 const {ArticleHelper} = NativeModules;
@@ -60,6 +61,7 @@ class ArticleLayout extends React.Component {
                 </ScrollView>
                 {/* 底部页脚位置 */}
                 <Foot/>
+                <CmntEditor/>
             </View>
         );
     }
