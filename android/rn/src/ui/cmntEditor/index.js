@@ -4,10 +4,11 @@
  */
 
 import React from 'react';
-import {View, Modal, TouchableHighlight, Text} from 'react-native';
+import {View, Modal, TouchableHighlight, Text, Dimensions, TextInput} from 'react-native';
 
 class CmntEditor extends React.Component {
     render() {
+        let {width} = Dimensions.get('window');
         return (
             <View style={{
                 marginTop: 22
@@ -16,22 +17,26 @@ class CmntEditor extends React.Component {
                     alert("Modal has been closed.")
                 }}>
                     <View style={{
-                        marginTop: 22,
                         backgroundColor:'#000',
-                        opacity:0.6
+                        opacity:0.6,
+                        flex:1
                     }}>
-                        <View style={{
-                            backgroundColor:'#fff'
-                        }}>
-                            <Text>Hello World!</Text>
-
-                            <TouchableHighlight onPress={() => {
-                                // this.setModalVisible(!this.state.modalVisible)
-                            }}>
-                                <Text>Hide Modal</Text>
-                            </TouchableHighlight>
-
-                        </View>
+                    </View>
+                    <View style={{
+                        position:'absolute',
+                        left:0,
+                        bottom:0,
+                        width:width,
+                        height:250,
+                        backgroundColor:'#fff'
+                    }}>
+                        <Text style={{
+                            color:'#000'
+                        }}>hello world</Text>
+                        <TextInput style={{
+                            height:200,
+                            borderColor:'gray'
+                        }}/>
                     </View>
                 </Modal>
             </View>
