@@ -17,7 +17,6 @@ class Article extends React.Component {
     render(){
         const {article,wbHeight} = this.props;
         const html = this.getRenderContent(article);
-        console.log(html);
         return (
             <View style={styles.container}>
                 {/*injectedJavaScript 方法可以送入后台一个执行方法，以及对应的参数
