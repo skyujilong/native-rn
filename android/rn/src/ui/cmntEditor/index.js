@@ -14,17 +14,40 @@ import {
     Alert,
     TouchableWithoutFeedback
 } from 'react-native';
+import './reducer';
+import {closeCmntEditor} from './action';
+import {connect} from 'react-redux';
 
 class CmntEditor extends React.Component {
+    constructor(){
+        super();
+        this.el = null;
+    }
+
+    componentDidUpdate(){
+        setTimeout(() => {
+            if(this.el){
+                this.el.focus();
+            }
+            //console.log(this.el);
+        },300);
+        setTimeout(() => {
+            console.log(Dimensions.get('window'));
+        },500)
+    }
+
     componentDidMount(){
+        const _self = this;
         console.log('mounting modal');
     }
     render() {
         let {width} = Dimensions.get('window');
+        const {isShowCmnt,closeCmnt} = this.props;
+
         return (
             <Modal
                 // 是否显示modal配置
-                visible={false}
+                visible={isShowCmnt}
                 animationType="fade"
                 transparent={true}
                 presentationStyle={'overFullScreen'}
@@ -32,8 +55,7 @@ class CmntEditor extends React.Component {
                 alert("Modal has been closed.")
             }}>
                 <TouchableWithoutFeedback onPress={() => {
-                    //TODO 关闭当前的model
-                    Alert.alert('touch mask!!');
+                    closeCmnt();
                 }}>
                     <View style={{
                         backgroundColor: '#000',
@@ -59,7 +81,13 @@ class CmntEditor extends React.Component {
                         borderWidth: 1,
                         textAlignVertical: 'top'
                     }}
-                    autoFocus={true}
+                    ref={(el) => {
+                        this.el = el;
+                    }}
+                    onLayout={(e) => {
+                        console.log(e.nativeEvent);
+                    }}
+                    // autoFocus={true}
                     multiline={true}
                     placeholder={'hello world'}/>
                 </View>
@@ -68,4 +96,18 @@ class CmntEditor extends React.Component {
     }
 }
 
-export default CmntEditor;
+function mapStateToProps(state){
+    return {
+        isShowCmnt:state.isShowCmnt
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        closeCmnt:() => {
+            dispatch(closeCmntEditor());
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CmntEditor);
