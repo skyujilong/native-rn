@@ -64,6 +64,12 @@ class Article extends React.Component {
                         margin:0;
                         padding:0;
                     }
+                    img{
+                        width:100%;
+                    }
+                    p{
+                        text-indent:2em;
+                    }
                 </style>
             </head>
             <body style="overflow:hidden;">

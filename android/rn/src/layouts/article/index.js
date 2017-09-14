@@ -46,7 +46,9 @@ class ArticleLayout extends React.Component {
         return (
             <View style={styles.container}>
                 {/* 添加loading动画效果 */}
-                <ScrollView>
+                <ScrollView style={{
+                    marginBottom:56
+                }}>
                     {/* 头部导航 */}
                     <Header/>
                     {/* 文章内容 */}

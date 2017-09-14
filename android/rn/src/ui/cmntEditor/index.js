@@ -62,7 +62,7 @@ class CmntEditor extends React.Component {
                     relativeKeyboardHeight={(keyFrame) => {
                         console.log(keyFrame);
                     }}
-                    keyboardVerticalOffset={-260}
+                    keyboardVerticalOffset={-1000}
                     onKeyboardChange={(e) => {
                     /*TODO 动态根据nativeEvent的给定高度，给textInput一个动画上浮*/
                     console.log(e.nativeEvent);
