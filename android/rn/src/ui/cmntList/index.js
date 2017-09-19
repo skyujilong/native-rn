@@ -9,14 +9,16 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import './reducer';
 import {connect} from 'react-redux';
 import styles from './css/style';
-import {goReplyList} from './action';
+import {goReplyList,disableGoReplyList} from './action';
+
 
 class CmntList extends React.Component {
     render() {
-        const {goReplyList,article} = this.props;
-        console.log(article);
+        const {goReplyList,article,ableGoCmntList} = this.props;
+        let ableGoFlag = true;
         return (
             <View style={styles.container}>
                 <View style={styles.titleRow}>
@@ -58,7 +60,16 @@ class CmntList extends React.Component {
                         </View>
                         <View style={[styles.cmntReplyContainerMt]}>
                             <TouchableOpacity onPress={() => {
-                                goReplyList();
+                                // if(ableGoCmntList){
+                                //     //TODO 采用该方案 去dispatch 禁止按钮状态是有问题的，因为setState这个api是异步的
+                                //     goReplyList();
+                                // }
+                                //这种可以 但是需要p
+                                if(ableGoFlag){
+                                    goReplyList();
+                                    ableGoFlag = false;
+                                    //TODO  添加 setTimeout方案？进行重置上述的状态
+                                }
                             }}>
                                 <Text style={styles.cmntLookMore}>查看全部3条回复</Text>
                             </TouchableOpacity>
@@ -115,7 +126,8 @@ class CmntList extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        article:state.article
+        article:state.article,
+        ableGoCmntList:state.ableGoCmntList
     }
 }
 function mapDispatchToProps(dispatch) {
@@ -123,7 +135,11 @@ function mapDispatchToProps(dispatch) {
         // postCmnt: () => {},
         goReplyList: () => {
             //TODO 需要添加一个公共的action与相应的reducers
+            /*这个地方能派发多次，因此需要有个状态标志已经切换了nav*/
             dispatch(goReplyList());
+        },
+        disableGoReplyList: () => {
+            dispatch(disableGoReplyList());
         }
     }
 }

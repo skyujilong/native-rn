@@ -3,6 +3,8 @@
 import React from 'react';
 import {View, Text, StyleSheet,Button,Alert} from 'react-native';
 import {connect} from 'react-redux';
+import {enableGoReplyList} from '../../ui/cmntList/action';
+
 const styles = StyleSheet.create({
     'container': {
         flex: 1,
@@ -18,8 +20,9 @@ class Cmnt extends React.Component {
         title: 'welcome cmnt'
     }
     render() {
-        const {article} = this.props;
-        console.log(article);
+        const {article,articleWebViewHeight,nav} = this.props;
+        console.log(nav);
+        console.log(articleWebViewHeight);
         return (
             <View style={styles.container}>
                 <Button title="postCmnt" onPress={() => {
@@ -31,6 +34,11 @@ class Cmnt extends React.Component {
     sendCmnt(){
 
     }
+
+    componentDidMount(){
+        const {changeGoReplyList} = this.props;
+        changeGoReplyList();
+    }
 }
 function mapDispatchToProps(state){
 
@@ -38,8 +46,17 @@ function mapDispatchToProps(state){
 
 function mapStateToProps(state){
     return {
-        article:state.article
+        article:state.article,
+        articleWebViewHeight:state.articleWebViewHeight,
+        nav:state.nav
+    }
+}
+function mapDispatchToProps(dispatch){
+    return {
+        changeGoReplyList:() => {
+            dispatch(enableGoReplyList());
+        }
     }
 }
 
-export default connect(mapStateToProps)(Cmnt);
+export default connect(mapStateToProps,mapDispatchToProps)(Cmnt);
