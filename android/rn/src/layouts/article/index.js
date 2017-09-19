@@ -13,6 +13,8 @@ import Header from '../../ui/head';
 import Article from '../../ui/article';
 import Foot from '../../ui/foot';
 import CmntEditor from '../../ui/cmntEditor';
+import CmntList from '../../ui/cmntList';
+
 
 import { NativeModules } from 'react-native';
 const {ArticleHelper} = NativeModules;
@@ -56,6 +58,7 @@ class ArticleLayout extends React.Component {
                     {/* 入选主题 */}
                     {/* 禁止评论 与 禁止转载 */}
                     {/* 评论区 */}
+                    <CmntList/>
                     {/* TODO 评论区中的接口是需要sub与subp的，
                         这样我们需要去给rn种cookie，目前的方案可以采用https://github.com/joeferraro/react-native-cookies */}
                     {/* 最底部的评论浮层 */}

@@ -18,6 +18,8 @@ class Cmnt extends React.Component {
         title: 'welcome cmnt'
     }
     render() {
+        const {article} = this.props;
+        console.log(article);
         return (
             <View style={styles.container}>
                 <Button title="postCmnt" onPress={() => {
@@ -30,12 +32,14 @@ class Cmnt extends React.Component {
 
     }
 }
-function mapDispatchToProps(){
+function mapDispatchToProps(state){
 
 }
 
-function mapStateToProps(){
-
+function mapStateToProps(state){
+    return {
+        article:state.article
+    }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Cmnt);
+export default connect(mapStateToProps)(Cmnt);

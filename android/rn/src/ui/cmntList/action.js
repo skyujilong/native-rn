@@ -13,6 +13,11 @@ function beginPostCmnt(){
     }
 }
 
+export function goReplyList(){
+    return {
+        type:'cmnt'
+    }
+}
 
 export function postCmnt(){
     return (dispatch) => {
