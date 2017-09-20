@@ -4,6 +4,7 @@ package com.testrn;
  * Created by jilong5 on 2017/9/7.
  */
 
+import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -64,9 +65,19 @@ public class ArticleHelper extends ReactContextBaseJavaModule {
     }
     @ReactMethod
     public void goBack(Promise promise) {
-        Intent intent = new Intent(getReactApplicationContext(),CeshiActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getReactApplicationContext().startActivity(intent);
-        promise.resolve(null);
+        //通过getCurrentActivity 方法获取当前的activity 之后调用finish调用退出方法,使得当前的activity退出，这样回退栈把当前的activity出栈！
+        Activity activity = getCurrentActivity();
+        if(activity != null){
+            promise.resolve(null);
+            activity.finish();
+        }else{
+            promise.reject("404","can't close activity!");
+        }
+        //没有采用 Intent的方式是因为 这个会生成一个新的回退栈，会导致我回退
+
+//        Intent intent = new Intent(getReactApplicationContext(),CeshiActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        getReactApplicationContext().startActivity(intent);
+
     }
 }
