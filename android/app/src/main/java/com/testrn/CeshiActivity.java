@@ -21,6 +21,10 @@ public class CeshiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CeshiActivity.this,MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name","yjl");
+                bundle.putInt("age",28);
+                intent.putExtra("data",bundle);
                 startActivity(intent);
             }
         });

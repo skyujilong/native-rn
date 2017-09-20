@@ -1,5 +1,6 @@
 package com.testrn;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
@@ -25,10 +26,13 @@ public class MainActivity extends ReactActivity {
             protected Bundle getLaunchOptions() {
                 //测试初始化react native props
 //                return super.getLaunchOptions();
-                Bundle initialProps = new Bundle();
-                initialProps.putString("SOME_VARIABLE_1", "some variable 1 value");
-                initialProps.putString("SOME_VARIABLE_2", "some variable 2 value");
-                return initialProps;
+                //通过这个方式获取activity的intent传递的参数
+                Intent intent = getIntent();
+                return intent.getBundleExtra("data");
+//                Bundle initialProps = new Bundle();
+//                initialProps.putString("SOME_VARIABLE_1", "some variable 1 value");
+//                initialProps.putString("SOME_VARIABLE_2", "some variable 2 value");
+//                return initialProps;
             }
         };
     }
