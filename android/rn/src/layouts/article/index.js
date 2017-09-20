@@ -35,7 +35,24 @@ const styles = StyleSheet.create({
 
 class ArticleLayout extends React.Component {
     static navigationOptions = {
-        title: 'welcome!!!'
+        header: ()=>{
+            return (
+                <View style={{
+                    height:30,
+                    flexDirection:'row'
+                }}>
+                    <Button title={'点我回退到activity'} onPress={() => {
+                        const {goBack} = ArticleHelper;
+                        goBack().then(function(){
+                            console.log('go back success');
+                        });
+                    }}/>
+                    <Text style={{
+                        marginLeft:20
+                    }}>HELLO WORLD!!!!</Text>
+                </View>
+            )
+        }
     }
 
     componentWillMount(){

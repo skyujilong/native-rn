@@ -4,6 +4,7 @@ package com.testrn;
  * Created by jilong5 on 2017/9/7.
  */
 
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.NativeModule;
@@ -12,6 +13,9 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+
+import com.testrn.MainActivity;
+import com.testrn.CeshiActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,5 +61,12 @@ public class ArticleHelper extends ReactContextBaseJavaModule {
     public void ajax(String cfg, Promise promise) {
         //TODO 进行后台数据请求 eg采用okhttp类库进行请求
         promise.resolve(cfg);
+    }
+    @ReactMethod
+    public void goBack(Promise promise) {
+        Intent intent = new Intent(getReactApplicationContext(),CeshiActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getReactApplicationContext().startActivity(intent);
+        promise.resolve(null);
     }
 }

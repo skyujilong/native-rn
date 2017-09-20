@@ -7,14 +7,14 @@ import {addNavigationHelpers, StackNavigator, NavigationActions} from 'react-nav
 import Article from './layouts/article';
 import Cmnt from './layouts/cmnt';
 import {initRootReducer} from './reducerM';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 //router
 const AppNavigator = StackNavigator({
     article: {
         screen: Article
     },
-    cmnt :{
+    cmnt: {
         screen: Cmnt
     }
 });
@@ -25,36 +25,26 @@ const AppNavigator = StackNavigator({
 //     }/>
 // );
 class AppWithNavigationState extends React.Component {
-    render(){
-        return (
-            <AppNavigator navigation={addNavigationHelpers({
-                dispatch: this.props.dispatch,
-                state: this.props.nav
-              })} />
-        );
+    render() {
+        return (<AppNavigator navigation={addNavigationHelpers({dispatch: this.props.dispatch, state: this.props.nav})}/>);
     }
 }
 
-const mapStateToProps = state => ({
-    nav:state.nav
-});
-
+const mapStateToProps = state => ({nav: state.nav});
 
 //初始化 nav的reducer相关
-const initialNavState = AppNavigator.router.getStateForAction(
-    AppNavigator.router.getActionForPathAndParams('article')
-);
+const initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('article'));
 
-function nav(state = initialNavState, action){
+function nav(state = initialNavState, action) {
     let nextState;
     //TODO switch case
-    switch(action.type){
+    switch (action.type) {
         case 'article':
-            nextState = AppNavigator.router.getStateForAction(NavigationActions.back(),state);
+            nextState = AppNavigator.router.getStateForAction(NavigationActions.back(), state);
             break;
         case 'cmnt':
             //如果 两个screen之前的切换没有发生动画，说明是没有更改navigation的index的值，https://github.com/react-community/react-navigation/issues/351
-            nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName:'cmnt'}),state)
+            nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'cmnt'}), state);
             break;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
