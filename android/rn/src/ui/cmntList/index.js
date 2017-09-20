@@ -69,6 +69,9 @@ class CmntList extends React.Component {
                                     goReplyList();
                                     ableGoFlag = false;
                                     //TODO  添加 setTimeout方案？进行重置上述的状态
+                                    setTimeout(() => {
+                                        ableGoFlag = true;
+                                    },1000);
                                 }
                             }}>
                                 <Text style={styles.cmntLookMore}>查看全部3条回复</Text>
