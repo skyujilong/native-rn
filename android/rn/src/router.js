@@ -31,13 +31,24 @@ class AppWithNavigationState extends React.Component {
         return (<AppNavigator navigation={addNavigationHelpers({dispatch: this.props.dispatch, state: this.props.nav})}/>);
     }
 }
-
+//TODO 和reduce配合貌似有点问题 明天修改为 无reduce的格式
 const mapStateToProps = state => ({nav: state.nav});
-
+//TODO https://github.com/react-community/react-navigation/issues/1357
 //初始化 nav的reducer相关
-const initialNavState = AppNavigator.router.getStateForAction(
-    AppNavigator.router.getActionForPathAndParams('article'),
-);
+// const initialNavState = AppNavigator.router.getStateForAction(
+//     AppNavigator.router.getActionForPathAndParams('article'),
+// );
+// https://github.com/react-community/react-navigation/issues/1357
+// 依然不好使
+const initialNavState=AppNavigator.router.getStateForAction(NavigationActions.reset({
+	index: 0,
+	actions: [
+	  NavigationActions.navigate({
+		routeName: 'article',
+	  }),
+	],
+}))
+
 
 function nav(state = initialNavState, action) {
     let nextState;
@@ -50,6 +61,8 @@ function nav(state = initialNavState, action) {
             //如果 两个screen之前的切换没有发生动画，说明是没有更改navigation的index的值，https://github.com/react-community/react-navigation/issues/351
             nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'cmnt'}), state);
             break;
+        default:
+            nextState = initialNavState;
     }
     return nextState || state;
 }
