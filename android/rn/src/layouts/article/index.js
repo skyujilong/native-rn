@@ -61,6 +61,9 @@ class ArticleLayout extends React.Component {
     }
 
     render() {
+        const {state} = this.props.navigation;
+        console.log('navigation state!!!!!!!!!!!!!!!!');
+        console.log(state);
         // const {article} = this.props;
         return (
             <View style={styles.container}>

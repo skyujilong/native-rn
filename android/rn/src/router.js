@@ -17,6 +17,8 @@ const AppNavigator = StackNavigator({
     cmnt: {
         screen: Cmnt
     }
+},{
+    headerMode:'screen'
 });
 // nav 是根据reducer生成出来的state中的一个属性
 // const AppWithNavigationState = ({dispatch, nav}) => (
@@ -33,7 +35,9 @@ class AppWithNavigationState extends React.Component {
 const mapStateToProps = state => ({nav: state.nav});
 
 //初始化 nav的reducer相关
-const initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('article'));
+const initialNavState = AppNavigator.router.getStateForAction(
+    AppNavigator.router.getActionForPathAndParams('article'),
+);
 
 function nav(state = initialNavState, action) {
     let nextState;
@@ -45,9 +49,6 @@ function nav(state = initialNavState, action) {
         case 'cmnt':
             //如果 两个screen之前的切换没有发生动画，说明是没有更改navigation的index的值，https://github.com/react-community/react-navigation/issues/351
             nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'cmnt'}), state);
-            break;
-        default:
-            nextState = AppNavigator.router.getStateForAction(action, state);
             break;
     }
     return nextState || state;
