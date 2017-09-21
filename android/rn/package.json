@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "jest",
+		"build-android":"node node_modules/react-native/local-cli/cli.js bundle --platform android --entry-file ./index.android.js --dev true --bundle-output ../app/src/main/assets/index.android.bundle --assets-dest ../app/src/main/res/"
 	},
 	"dependencies": {
 		"react": "16.0.0-alpha.12",
