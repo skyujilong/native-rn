@@ -61,11 +61,14 @@ class ArticleLayout extends React.Component {
 
                         goBack().then(function(){
                             console.log('go back success');
-                            //TODO 重置状态
-                            //重置文章的isDone状态
-                            dispatch(loadDone(false));
-                            //重置loading的view的状态
-                            dispatch(hideLoading(false));
+                            setTimeout(() => {
+                                //重置状态
+                                //重置文章的isDone状态
+                                dispatch(loadDone(false));
+                                //重置loading的view的状态
+                                dispatch(hideLoading(false));
+                            },300);
+
                         });
                     }}/>
                     <Text style={{
