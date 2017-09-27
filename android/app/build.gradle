@@ -135,7 +135,7 @@ android {
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     // From node_modules
-    compile project(':react-native-cookies')
+//    compile project(':react-native-cookies')
     compile 'com.android.support:appcompat-v7:23.0.1'
     //添加react native相关依赖版本 不要用+ 加好代表每次都是最新 有可能版本号对应不上
 //    compile 'com.facebook.react:react-native:+'

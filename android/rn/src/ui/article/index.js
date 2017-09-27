@@ -6,7 +6,7 @@ import {View,WebView,Text} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './css/style';
 import ActionType from '../../actionType';
-import {changeWebHeight} from './action';
+import {changeWebHeight,loadDone} from './action';
 import './reducer';
 
 class Article extends React.Component {
@@ -16,12 +16,18 @@ class Article extends React.Component {
     }
     render(){
         const {article,wbHeight} = this.props;
+
         const html = this.getRenderContent(article);
+
         return (
-            <View style={styles.container}>
+            <View style={{
+                height:wbHeight,
+                paddingLeft:32/2,
+                paddingRight:32/2
+            }}>
                 {/*injectedJavaScript 方法可以送入后台一个执行方法，以及对应的参数
                     onMessage方法可以接受对应的传回来的值，比如说刚开始定义，webview的高度，之后根据load事件去派发postMessage更改webview的高度  */}
-                {article.article_body && <WebView
+                <WebView
 
                     style={{
                         flex:1,
@@ -38,22 +44,26 @@ class Article extends React.Component {
                         console.log(e);
                     }}
 
-                    ></WebView>}
+                    ></WebView>
 
             </View>
         );
     }
     message(e){
-        const {reSizeWebView} = this.props;
+        const {reSizeWebView,loadDone} = this.props;
         let data = JSON.parse(e.nativeEvent.data);
         switch(data.type){
             case 'onload':
+                // console.log('onload............................');
                 reSizeWebView(data.data.height);
+                setTimeout(() => {
+                    loadDone();
+                },600);
                 break;
         }
     }
     getRenderContent(content){
-        const {article_body} = content;
+        let {article_body=''} = content;
         let html = `<!DOCTYPE html>
         <html>
             <head>
@@ -107,7 +117,11 @@ function mapDispatchToProps(dispatch){
     return {
         reSizeWebView: (height) => {
             dispatch(changeWebHeight(height));
+        },
+        loadDone: () => {
+            dispatch(loadDone());
         }
+
     }
 }
 

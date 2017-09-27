@@ -53674,6 +53674,8 @@ var AppNavigator = (0, _reactNavigation.StackNavigator)({
     cmnt: {
         screen: _cmnt2.default
     }
+}, {
+    headerMode: 'screen'
 });
 
 var AppWithNavigationState = function (_React$Component) {
@@ -53689,7 +53691,7 @@ var AppWithNavigationState = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(AppNavigator, { navigation: (0, _reactNavigation.addNavigationHelpers)({ dispatch: this.props.dispatch, state: this.props.nav }), __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 29
+                    lineNumber: 31
                 }
             });
         }
@@ -53701,7 +53703,12 @@ var mapStateToProps = function mapStateToProps(state) {
     return { nav: state.nav };
 };
 
-var initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('article'));
+var initialNavState = AppNavigator.router.getStateForAction(_reactNavigation.NavigationActions.reset({
+    index: 0,
+    actions: [_reactNavigation.NavigationActions.navigate({
+        routeName: 'article'
+    })]
+}));
 
 function nav() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialNavState;
@@ -53717,8 +53724,7 @@ function nav() {
             nextState = AppNavigator.router.getStateForAction(_reactNavigation.NavigationActions.navigate({ routeName: 'cmnt' }), state);
             break;
         default:
-            nextState = AppNavigator.router.getStateForAction(action, state);
-            break;
+            nextState = initialNavState;
     }
     return nextState || state;
 }
@@ -60782,11 +60788,16 @@ var ArticleLayout = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var state = this.props.navigation.state;
+
+            console.log('navigation state!!!!!!!!!!!!!!!!');
+            console.log(state);
+
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: styles.container, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 66
+                        lineNumber: 69
                     }
                 },
                 _react2.default.createElement(
@@ -60795,38 +60806,38 @@ var ArticleLayout = function (_React$Component) {
                             marginBottom: 56
                         }, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 68
+                            lineNumber: 71
                         }
                     },
                     _react2.default.createElement(_head2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 72
+                            lineNumber: 75
                         }
                     }),
                     _react2.default.createElement(_article2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 74
+                            lineNumber: 77
                         }
                     }),
                     _react2.default.createElement(_cmntList2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 78
+                            lineNumber: 81
                         }
                     })
                 ),
                 _react2.default.createElement(_foot2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 85
+                        lineNumber: 88
                     }
                 }),
                 _react2.default.createElement(_cmntEditor2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 86
+                        lineNumber: 89
                     }
                 })
             );

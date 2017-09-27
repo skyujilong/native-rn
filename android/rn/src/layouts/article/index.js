@@ -17,6 +17,9 @@ import CmntList from '../../ui/cmntList';
 
 
 import { NativeModules } from 'react-native';
+
+import Loading from '../../ui/loading';
+
 const {ArticleHelper} = NativeModules;
 //注册了一个helper的方法，用于提供接口访问相关
 ArticleHelper.ajax(JSON.stringify({url:'helloworld','method':'post'})).then(function(data){
@@ -45,6 +48,7 @@ class ArticleLayout extends React.Component {
                         const {goBack} = ArticleHelper;
                         goBack().then(function(){
                             console.log('go back success');
+                            //TODO 重置状态
                         });
                     }}/>
                     <Text style={{
@@ -62,12 +66,11 @@ class ArticleLayout extends React.Component {
 
     render() {
         const {state} = this.props.navigation;
-        console.log('navigation state!!!!!!!!!!!!!!!!');
-        console.log(state);
-        // const {article} = this.props;
+        const {hideLoading} = this.props;
         return (
             <View style={styles.container}>
                 {/* 添加loading动画效果 */}
+                {!hideLoading && <Loading/>}
                 <ScrollView style={{
                     marginBottom:56
                 }}>
@@ -94,7 +97,8 @@ class ArticleLayout extends React.Component {
 
 function mapStateToProps(state){
     return {
-        article:state.article
+        article:state.article,
+        hideLoading:state.hideLoading
     }
 }
 function mapDispatchToProps(dispatch){
