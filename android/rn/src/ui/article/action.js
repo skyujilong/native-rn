@@ -13,9 +13,9 @@ export function changeWebHeight(height){
     }
 }
 
-export function loadDone(){
+export function loadDone(isDone){
     return {
         type:ActionType.ART_LOAD_DOWN,
-        data:true
+        data:isDone
     }
 }

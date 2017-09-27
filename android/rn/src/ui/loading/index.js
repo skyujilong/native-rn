@@ -135,7 +135,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return {
         hideAnimatDispatch: function(){
-            dispatch(hideLoading());
+            dispatch(hideLoading(true));
         }
     }
 }

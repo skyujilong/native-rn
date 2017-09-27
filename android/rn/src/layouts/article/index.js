@@ -11,6 +11,8 @@ import './reducer';
 
 import Header from '../../ui/head';
 import Article from '../../ui/article';
+import {loadDone} from '../../ui/article/action';
+
 import Foot from '../../ui/foot';
 import CmntEditor from '../../ui/cmntEditor';
 import CmntList from '../../ui/cmntList';
@@ -19,6 +21,9 @@ import CmntList from '../../ui/cmntList';
 import { NativeModules } from 'react-native';
 
 import Loading from '../../ui/loading';
+
+import {hideLoading} from '../../ui/loading/action';
+
 
 const {ArticleHelper} = NativeModules;
 //注册了一个helper的方法，用于提供接口访问相关
@@ -38,7 +43,14 @@ const styles = StyleSheet.create({
 
 class ArticleLayout extends React.Component {
     static navigationOptions = {
-        header: ()=>{
+        header: ({navigation})=>{
+            //这里就navigation能用
+            // console.log('helloworld');
+            // console.log(navigation);
+            // console.log(props);
+            // const {resetState} = this.props;
+            //这里的navigation中的dispatch就是redux中的dispatch 太棒了可以这里直接dispatch action了！！！
+            const {dispatch} = navigation;
             return (
                 <View style={{
                     height:30,
@@ -46,9 +58,14 @@ class ArticleLayout extends React.Component {
                 }}>
                     <Button title={'点我回退到activity'} onPress={() => {
                         const {goBack} = ArticleHelper;
+
                         goBack().then(function(){
                             console.log('go back success');
                             //TODO 重置状态
+                            //重置文章的isDone状态
+                            dispatch(loadDone(false));
+                            //重置loading的view的状态
+                            dispatch(hideLoading(false));
                         });
                     }}/>
                     <Text style={{
@@ -105,6 +122,12 @@ function mapDispatchToProps(dispatch){
     return {
         getArticle: () => {
             dispatch(reqArticle());
+        },
+        resetState: () => {
+            //重置文章的isDone状态
+            dispatch(loadDone(false));
+            //重置loading的view的状态
+            dispatch(hideLoading(false));
         }
     }
 }

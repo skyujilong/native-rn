@@ -57,8 +57,9 @@ class Article extends React.Component {
                 // console.log('onload............................');
                 reSizeWebView(data.data.height);
                 setTimeout(() => {
-                    loadDone();
-                },600);
+                    console.log('loading.......done...........');
+                    loadDone(true);
+                },1000);
                 break;
         }
     }
@@ -119,7 +120,7 @@ function mapDispatchToProps(dispatch){
             dispatch(changeWebHeight(height));
         },
         loadDone: () => {
-            dispatch(loadDone());
+            dispatch(loadDone(true));
         }
 
     }

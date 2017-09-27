@@ -53659,7 +53659,7 @@ var _article = require(397                ); // 397 = ./layouts/article
 
 var _article2 = babelHelpers.interopRequireDefault(_article);
 
-var _cmnt = require(438             ); // 438 = ./layouts/cmnt
+var _cmnt = require(442             ); // 442 = ./layouts/cmnt
 
 var _cmnt2 = babelHelpers.interopRequireDefault(_cmnt);
 
@@ -60755,6 +60755,10 @@ var _cmntList = require(433                ); // 433 = ../../ui/cmntList
 
 var _cmntList2 = babelHelpers.interopRequireDefault(_cmntList);
 
+var _loading = require(438               ); // 438 = ../../ui/loading
+
+var _loading2 = babelHelpers.interopRequireDefault(_loading);
+
 var ArticleHelper = _reactNative.NativeModules.ArticleHelper;
 
 ArticleHelper.ajax(JSON.stringify({ url: 'helloworld', 'method': 'post' })).then(function (data) {
@@ -60789,55 +60793,59 @@ var ArticleLayout = function (_React$Component) {
         key: 'render',
         value: function render() {
             var state = this.props.navigation.state;
-
-            console.log('navigation state!!!!!!!!!!!!!!!!');
-            console.log(state);
+            var hideLoading = this.props.hideLoading;
 
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: styles.container, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 69
+                        lineNumber: 71
                     }
                 },
+                !hideLoading && _react2.default.createElement(_loading2.default, {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 73
+                    }
+                }),
                 _react2.default.createElement(
                     _reactNative.ScrollView,
                     { style: {
                             marginBottom: 56
                         }, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 71
+                            lineNumber: 74
                         }
                     },
                     _react2.default.createElement(_head2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 75
+                            lineNumber: 78
                         }
                     }),
                     _react2.default.createElement(_article2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 77
+                            lineNumber: 80
                         }
                     }),
                     _react2.default.createElement(_cmntList2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 81
+                            lineNumber: 84
                         }
                     })
                 ),
                 _react2.default.createElement(_foot2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 88
+                        lineNumber: 91
                     }
                 }),
                 _react2.default.createElement(_cmntEditor2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 89
+                        lineNumber: 92
                     }
                 })
             );
@@ -60855,7 +60863,7 @@ ArticleLayout.navigationOptions = {
                     flexDirection: 'row'
                 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 40
+                    lineNumber: 43
                 }
             },
             _react2.default.createElement(_reactNative.Button, { title: '点我回退到activity', onPress: function onPress() {
@@ -60866,7 +60874,7 @@ ArticleLayout.navigationOptions = {
                     });
                 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 44
+                    lineNumber: 47
                 }
             }),
             _react2.default.createElement(
@@ -60875,7 +60883,7 @@ ArticleLayout.navigationOptions = {
                         marginLeft: 20
                     }, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 50
+                        lineNumber: 54
                     }
                 },
                 'HELLO WORLD!!!!'
@@ -60887,7 +60895,8 @@ ArticleLayout.navigationOptions = {
 
 function mapStateToProps(state) {
     return {
-        article: state.article
+        article: state.article,
+        hideLoading: state.hideLoading
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -62345,15 +62354,21 @@ var Article = function (_React$Component) {
                 article = _props.article,
                 wbHeight = _props.wbHeight;
 
+
             var html = this.getRenderContent(article);
+
             return _react2.default.createElement(
                 _reactNative.View,
-                { style: _style2.default.container, __source: {
+                { style: {
+                        height: wbHeight,
+                        paddingLeft: 32 / 2,
+                        paddingRight: 32 / 2
+                    }, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 21
+                        lineNumber: 23
                     }
                 },
-                article.article_body && _react2.default.createElement(_reactNative.WebView, {
+                _react2.default.createElement(_reactNative.WebView, {
 
                     style: {
                         flex: 1,
@@ -62372,7 +62387,7 @@ var Article = function (_React$Component) {
 
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 24
+                        lineNumber: 30
                     }
                 })
             );
@@ -62380,19 +62395,25 @@ var Article = function (_React$Component) {
     }, {
         key: 'message',
         value: function message(e) {
-            var reSizeWebView = this.props.reSizeWebView;
+            var _props2 = this.props,
+                reSizeWebView = _props2.reSizeWebView,
+                loadDone = _props2.loadDone;
 
             var data = JSON.parse(e.nativeEvent.data);
             switch (data.type) {
                 case 'onload':
                     reSizeWebView(data.data.height);
+                    setTimeout(function () {
+                        loadDone();
+                    }, 1000);
                     break;
             }
         }
     }, {
         key: 'getRenderContent',
         value: function getRenderContent(content) {
-            var article_body = content.article_body;
+            var _content$article_body = content.article_body,
+                article_body = _content$article_body === undefined ? '' : _content$article_body;
 
             var html = '<!DOCTYPE html>\n        <html>\n            <head>\n                <meta charset="utf-8">\n                <title>hehe \u6D4B\u8BD5\u54E6\uFF01\uFF01\uFF01</title>\n                <style>\n                    *{\n                        margin:0;\n                        padding:0;\n                    }\n                    img{\n                        width:100%;\n                    }\n                    p{\n                        text-indent:2em;\n                    }\n                </style>\n            </head>\n            <body style="overflow:hidden;">\n                <div style="height:100%;overflow:hidden;">\n                    <div id="container">\n                        ' + article_body + '\n                    </div>\n                </div>\n                <script>\n                    window.onload = function(){\n                        setTimeout(function(){\n                            /* \u7B2C\u4E00\u4E2A\u53C2\u6570\u5FC5\u987B\u662Fstring\u7C7B\u578B\u7684 */\n                            var height = getComputedStyle(document.getElementById(\'container\')).height;\n                            height = height.replace(\'px\',\'\') - 0;\n                            postMessage(JSON.stringify({type:\'onload\',data:{height:height}}),\'*\');\n                        },100)\n                    }\n                </script>\n            </body>\n        </html>';
             return html;
@@ -62412,7 +62433,11 @@ function mapDispatchToProps(dispatch) {
     return {
         reSizeWebView: function reSizeWebView(height) {
             dispatch((0, _action.changeWebHeight)(height));
+        },
+        loadDone: function loadDone() {
+            dispatch((0, _action.loadDone)());
         }
+
     };
 }
 
@@ -62428,9 +62453,6 @@ var _reactNative = require(26            ); // 26 = react-native
 
 exports.default = _reactNative.StyleSheet.create({
     container: {
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
         paddingLeft: 32 / 2,
         paddingRight: 32 / 2
     }
@@ -62442,19 +62464,28 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.changeWebHeight = changeWebHeight;
+exports.loadDone = loadDone;
 
 var _actionType = require(415               ); // 415 = ../../actionType
 
 var _actionType2 = babelHelpers.interopRequireDefault(_actionType);
 
 var ART_CHANGE_WEB_HEIGHT = 'ART_CHANGE_WEB_HEIGHT';
+var ART_LOAD_DOWN = 'ART_LOAD_DOWN';
 
-(0, _actionType.register)([ART_CHANGE_WEB_HEIGHT]);
+(0, _actionType.register)([ART_CHANGE_WEB_HEIGHT, ART_LOAD_DOWN]);
 
 function changeWebHeight(height) {
     return {
         type: _actionType2.default.ART_CHANGE_WEB_HEIGHT,
         data: height
+    };
+}
+
+function loadDone() {
+    return {
+        type: _actionType2.default.ART_LOAD_DOWN,
+        data: true
     };
 }
 }, 422, null, "testrn/src/ui/article/action.js");
@@ -62467,7 +62498,7 @@ var _actionType = require(415               ); // 415 = ../../actionType
 var _actionType2 = babelHelpers.interopRequireDefault(_actionType);
 
 function articleWebViewHeight() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 400;
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
     var action = arguments[1];
 
 
@@ -62477,7 +62508,18 @@ function articleWebViewHeight() {
     return state;
 }
 
+function loadDone() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var action = arguments[1];
+
+    if (action.type === _actionType2.default.ART_LOAD_DOWN) {
+        return action.data;
+    }
+    return state;
+}
+
 (0, _reducerM.initRootReducer)(articleWebViewHeight);
+(0, _reducerM.initRootReducer)(loadDone);
 }, 423, null, "testrn/src/ui/article/reducer.js");
 __d(/* testrn/src/ui/foot/index.js */function(global, require, module, exports) {'use strict';
 
@@ -63677,6 +63719,223 @@ function postCmnt() {
 }, 436, null, "testrn/src/ui/cmntList/action.js");
 __d(/* testrn/src/ui/cmntList/img/nomal.png */function(global, require, module, exports) {module.exports=require(169                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/ui/cmntList/img","width":40,"height":40,"scales":[1],"hash":"98bf3950ac2fc8db72062ec0e83ae0df","name":"nomal","type":"png"}); // 169 = react-native/Libraries/Image/AssetRegistry
 }, 437, null, "testrn/src/ui/cmntList/img/nomal.png");
+__d(/* testrn/src/ui/loading/index.js */function(global, require, module, exports) {'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var _jsxFileName = 'D:\\github-workspace\\native-rn\\android\\rn\\src\\ui\\loading\\index.js';
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+require(439        ); // 439 = ./reducer
+
+var _reactNative = require(26            ); // 26 = react-native
+
+var _reactRedux = require(398          ); // 398 = react-redux
+
+var _action = require(440       ); // 440 = ./action
+
+var Loading = function (_React$Component) {
+    babelHelpers.inherits(Loading, _React$Component);
+
+    function Loading() {
+        babelHelpers.classCallCheck(this, Loading);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (Loading.__proto__ || Object.getPrototypeOf(Loading)).call(this));
+
+        _this.animateCfg = {
+            rotateAnimat: new _reactNative.Animated.Value(0),
+            hideAnimat: new _reactNative.Animated.Value(0),
+            showNum: false
+        };
+
+        _this.runAnimate = _this.runAnimate.bind(_this);
+        _this.runHide = _this.runHide.bind(_this);
+        return _this;
+    }
+
+    babelHelpers.createClass(Loading, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var hideAnimat = this.animateCfg.hideAnimat;
+            var hideAnimatDispatch = this.props.hideAnimatDispatch;
+
+            this.runAnimate();
+            hideAnimat.addListener(function (data) {
+                console.log(data);
+                if (data.value === 1) {
+                    console.log('动画执行完毕');
+
+                    hideAnimatDispatch();
+                }
+            });
+        }
+    }, {
+        key: 'runAnimate',
+        value: function runAnimate() {
+            var _this2 = this;
+
+            this.animateCfg.rotateAnimat.setValue(0);
+            _reactNative.Animated.timing(this.animateCfg.rotateAnimat, {
+                toValue: 1,
+                duration: 800,
+                easing: _reactNative.Easing.linear
+            }).start(function () {
+                _this2.runAnimate();
+            });
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            var _animateCfg = this.animateCfg,
+                rotateAnimat = _animateCfg.rotateAnimat,
+                hideAnimat = _animateCfg.hideAnimat;
+
+            rotateAnimat.stopAnimation();
+            hideAnimat.removeAllListeners();
+        }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            if (this.props.loadDone != nextProps.loadDone) {
+                this.runHide();
+                return true;
+            }
+        }
+    }, {
+        key: 'runHide',
+        value: function runHide() {
+            var _this3 = this;
+
+            _reactNative.Animated.timing(this.animateCfg.hideAnimat, {
+                toValue: 1,
+                duration: 1600
+            }).start(function () {
+                _this3.animateCfg.showNum = true;
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _animateCfg2 = this.animateCfg,
+                rotateAnimat = _animateCfg2.rotateAnimat,
+                hideAnimat = _animateCfg2.hideAnimat,
+                showNum = _animateCfg2.showNum;
+            var loadDone = this.props.loadDone;
+
+            var hideVal = 1;
+            if (loadDone) {
+                hideVal = hideAnimat.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 0]
+                });
+            }
+            var val = rotateAnimat.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0deg', '360deg']
+            });
+
+            var _Dimensions$get = _reactNative.Dimensions.get('window'),
+                height = _Dimensions$get.height,
+                width = _Dimensions$get.width;
+
+            return _react2.default.createElement(
+                _reactNative.Animated.View,
+                { style: {
+                        position: 'absolute',
+                        zIndex: 20,
+                        width: width,
+                        height: height - 20,
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#fff',
+                        opacity: hideVal
+                    }, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 104
+                    }
+                },
+                _react2.default.createElement(_reactNative.Animated.Image, {
+                    style: {
+                        width: 36,
+                        height: 36,
+                        transform: [{
+                            rotate: val
+                        }]
+                    },
+                    source: require(441                  ), // 441 = ./image/loading.png
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 115
+                    }
+                })
+            );
+        }
+    }]);
+    return Loading;
+}(_react2.default.Component);
+
+function mapStateToProps(state) {
+    return {
+        loadDone: state.loadDone
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        hideAnimatDispatch: function hideAnimatDispatch() {
+            dispatch((0, _action.hideLoading)());
+        }
+    };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Loading);
+}, 438, null, "testrn/src/ui/loading/index.js");
+__d(/* testrn/src/ui/loading/reducer.js */function(global, require, module, exports) {'use strict';
+
+var _reducerM = require(417             ); // 417 = ../../reducerM
+
+var _actionType = require(415               ); // 415 = ../../actionType
+
+var _actionType2 = babelHelpers.interopRequireDefault(_actionType);
+
+function hideLoading() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var action = arguments[1];
+
+    if (action.type === _actionType2.default.HIDE_LOADING) {
+        return action.data;
+    }
+    return state;
+}
+(0, _reducerM.initRootReducer)(hideLoading);
+}, 439, null, "testrn/src/ui/loading/reducer.js");
+__d(/* testrn/src/ui/loading/action.js */function(global, require, module, exports) {'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.hideLoading = hideLoading;
+
+var _actionType = require(415               ); // 415 = ../../actionType
+
+var _actionType2 = babelHelpers.interopRequireDefault(_actionType);
+
+var HIDE_LOADING = 'HIDE_LOADING';
+(0, _actionType.register)([HIDE_LOADING]);
+function hideLoading() {
+    return {
+        type: _actionType2.default.HIDE_LOADING,
+        data: true
+    };
+}
+}, 440, null, "testrn/src/ui/loading/action.js");
+__d(/* testrn/src/ui/loading/image/loading.png */function(global, require, module, exports) {module.exports=require(169                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/src/ui/loading/image","width":36,"height":36,"scales":[1],"hash":"132f35790b428909d9c21fd1f3a10f79","name":"loading","type":"png"}); // 169 = react-native/Libraries/Image/AssetRegistry
+}, 441, null, "testrn/src/ui/loading/image/loading.png");
 __d(/* testrn/src/layouts/cmnt/index.js */function(global, require, module, exports) {'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63795,6 +64054,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Cmnt);
-}, 438, null, "testrn/src/layouts/cmnt/index.js");
+}, 442, null, "testrn/src/layouts/cmnt/index.js");
 ;require(64);
 ;require(0);
