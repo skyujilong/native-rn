@@ -36,7 +36,7 @@ class Loading extends React.Component {
         let {hideAnimatDispatch} = this.props
         this.runAnimate();
         hideAnimat.addListener((data) => {
-            console.log(data);
+            // console.log(data);
             if(data.value === 1){
                 console.log('动画执行完毕');
                 //TODO 输出一个属性 用这个属性干掉这个图层\

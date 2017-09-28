@@ -60,6 +60,7 @@ export function reqArticle() {
                 //Cookie 可以直接传递cookie 可惜的是 没有办法修改referrer!!!还是需要借助native原生的方式来搞referrer
             }
         }).then((response) => response.json()).then((res) => {
+            // console.log(res.data);
             dispatch(success(res.data));
         },(err) => {
             dispatch(success(err));

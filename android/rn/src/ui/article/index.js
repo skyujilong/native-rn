@@ -65,6 +65,7 @@ class Article extends React.Component {
     }
     getRenderContent(content){
         let {article_body=''} = content;
+        console.log(article_body);
         let html = `<!DOCTYPE html>
         <html>
             <head>

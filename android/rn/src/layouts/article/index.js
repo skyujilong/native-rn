@@ -61,13 +61,13 @@ class ArticleLayout extends React.Component {
 
                         goBack().then(function(){
                             console.log('go back success');
-                            setTimeout(() => {
-                                //重置状态
-                                //重置文章的isDone状态
-                                dispatch(loadDone(false));
-                                //重置loading的view的状态
-                                dispatch(hideLoading(false));
-                            },300);
+                            // setTimeout(() => {
+                            //     //重置状态
+                            //     //重置文章的isDone状态
+                            //     dispatch(loadDone(false));
+                            //     //重置loading的view的状态
+                            //     dispatch(hideLoading(false));
+                            // },300);
 
                         });
                     }}/>
@@ -86,7 +86,7 @@ class ArticleLayout extends React.Component {
 
     render() {
         const {state} = this.props.navigation;
-        const {hideLoading} = this.props;
+        const {hideLoading,article} = this.props;
         return (
             <View style={styles.container}>
                 {/* 添加loading动画效果 */}
@@ -97,7 +97,7 @@ class ArticleLayout extends React.Component {
                     {/* 头部导航 */}
                     <Header/>
                     {/* 文章内容 */}
-                    <Article/>
+                    {article.article_id && <Article/>}
                     {/* 入选主题 */}
                     {/* 禁止评论 与 禁止转载 */}
                     {/* 评论区 */}
