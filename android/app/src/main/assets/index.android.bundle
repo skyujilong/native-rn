@@ -60743,6 +60743,8 @@ var _article = require(420               ); // 420 = ../../ui/article
 
 var _article2 = babelHelpers.interopRequireDefault(_article);
 
+var _action2 = require(422                      ); // 422 = ../../ui/article/action
+
 var _foot = require(424            ); // 424 = ../../ui/foot
 
 var _foot2 = babelHelpers.interopRequireDefault(_foot);
@@ -60758,6 +60760,8 @@ var _cmntList2 = babelHelpers.interopRequireDefault(_cmntList);
 var _loading = require(438               ); // 438 = ../../ui/loading
 
 var _loading2 = babelHelpers.interopRequireDefault(_loading);
+
+var _action3 = require(440                      ); // 440 = ../../ui/loading/action
 
 var ArticleHelper = _reactNative.NativeModules.ArticleHelper;
 
@@ -60799,13 +60803,13 @@ var ArticleLayout = function (_React$Component) {
                 _reactNative.View,
                 { style: styles.container, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 71
+                        lineNumber: 91
                     }
                 },
                 !hideLoading && _react2.default.createElement(_loading2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 73
+                        lineNumber: 93
                     }
                 }),
                 _react2.default.createElement(
@@ -60814,38 +60818,38 @@ var ArticleLayout = function (_React$Component) {
                             marginBottom: 56
                         }, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 74
+                            lineNumber: 94
                         }
                     },
                     _react2.default.createElement(_head2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 78
+                            lineNumber: 98
                         }
                     }),
                     _react2.default.createElement(_article2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 80
+                            lineNumber: 100
                         }
                     }),
                     _react2.default.createElement(_cmntList2.default, {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 84
+                            lineNumber: 104
                         }
                     })
                 ),
                 _react2.default.createElement(_foot2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 91
+                        lineNumber: 111
                     }
                 }),
                 _react2.default.createElement(_cmntEditor2.default, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 92
+                        lineNumber: 112
                     }
                 })
             );
@@ -60855,7 +60859,10 @@ var ArticleLayout = function (_React$Component) {
 }(_react2.default.Component);
 
 ArticleLayout.navigationOptions = {
-    header: function header() {
+    header: function header(_ref) {
+        var navigation = _ref.navigation;
+        var dispatch = navigation.dispatch;
+
         return _react2.default.createElement(
             _reactNative.View,
             { style: {
@@ -60863,18 +60870,24 @@ ArticleLayout.navigationOptions = {
                     flexDirection: 'row'
                 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 43
+                    lineNumber: 55
                 }
             },
             _react2.default.createElement(_reactNative.Button, { title: '点我回退到activity', onPress: function onPress() {
                     var goBack = ArticleHelper.goBack;
 
+
                     goBack().then(function () {
                         console.log('go back success');
+                        setTimeout(function () {
+                            dispatch((0, _action2.loadDone)(false));
+
+                            dispatch((0, _action3.hideLoading)(false));
+                        }, 300);
                     });
                 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 47
+                    lineNumber: 59
                 }
             }),
             _react2.default.createElement(
@@ -60883,7 +60896,7 @@ ArticleLayout.navigationOptions = {
                         marginLeft: 20
                     }, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 54
+                        lineNumber: 74
                     }
                 },
                 'HELLO WORLD!!!!'
@@ -60903,6 +60916,11 @@ function mapDispatchToProps(dispatch) {
     return {
         getArticle: function getArticle() {
             dispatch((0, _action.reqArticle)());
+        },
+        resetState: function resetState() {
+            dispatch((0, _action2.loadDone)(false));
+
+            dispatch((0, _action3.hideLoading)(false));
         }
     };
 }
@@ -62404,7 +62422,8 @@ var Article = function (_React$Component) {
                 case 'onload':
                     reSizeWebView(data.data.height);
                     setTimeout(function () {
-                        loadDone();
+                        console.log('loading.......done...........');
+                        loadDone(true);
                     }, 1000);
                     break;
             }
@@ -62435,7 +62454,7 @@ function mapDispatchToProps(dispatch) {
             dispatch((0, _action.changeWebHeight)(height));
         },
         loadDone: function loadDone() {
-            dispatch((0, _action.loadDone)());
+            dispatch((0, _action.loadDone)(true));
         }
 
     };
@@ -62482,10 +62501,10 @@ function changeWebHeight(height) {
     };
 }
 
-function loadDone() {
+function loadDone(isDone) {
     return {
         type: _actionType2.default.ART_LOAD_DOWN,
-        data: true
+        data: isDone
     };
 }
 }, 422, null, "testrn/src/ui/article/action.js");
@@ -63888,7 +63907,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         hideAnimatDispatch: function hideAnimatDispatch() {
-            dispatch((0, _action.hideLoading)());
+            dispatch((0, _action.hideLoading)(true));
         }
     };
 }
@@ -63927,10 +63946,10 @@ var _actionType2 = babelHelpers.interopRequireDefault(_actionType);
 
 var HIDE_LOADING = 'HIDE_LOADING';
 (0, _actionType.register)([HIDE_LOADING]);
-function hideLoading() {
+function hideLoading(isHide) {
     return {
         type: _actionType2.default.HIDE_LOADING,
-        data: true
+        data: isHide
     };
 }
 }, 440, null, "testrn/src/ui/loading/action.js");
